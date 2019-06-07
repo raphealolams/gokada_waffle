@@ -12,8 +12,9 @@ Backend Developer Assignment
 * [Error Documentation](#error-documentation)
 * [API Endpoint](#API-Endpoint)
     * [Validate Card](#validate-card)
-        * [Stripe Charge](#stripe-charge)
-        * [Stripe Webhook](#stripe-webhook)
+        * [Verify Card](#verify-card)
+    * [Get Balance](#get-balance)
+        * [Balance](#balance)
 * [Author](#author)
 * [What i Do](#what-i-do)
 
@@ -54,10 +55,10 @@ Install Dependency
 # API Endpoint
 
 ## Validate Card
-* *Handles card validation after card has read by Card reader*
+* *Handles card validation*
 
 ### Verify Card
-* *This method receive a front-end payment and create a chage.*
+* *This method send's card details after the card reader captures the account information stored on the magnetic stripe*
 
     **URL** : `/api/verifyCard`
 
@@ -78,16 +79,16 @@ Install Dependency
 
     **Success Response**
 
-    **Description** : `Object from Stripe`
+    **Description** : `Response Object`
 
     **Code** : `200 OK`
 
     **Content**
     ```json
     {
-        "status": `boolean`,
-        "message": `string`,
-        "token": `string`
+        "status": true,
+        "message": "",
+        "token":  ""
     }
     ```
 
@@ -95,34 +96,74 @@ Install Dependency
 
     **Description** : `Return a error object.`
 
-    **Code** : `400`
+    **Code** : ``
 
     **Content** :
     ```json
     {
-        "code": "USR_02",
-        "message": "The field example is empty.",
-        "field": "example",
-        "status": "500"
+        "status": false,
+        "message": "invalid credentials",
+        "pinLimitReached": false,
+        "retainCard": false
     }
     ```
 
-    **Description**: `Unauthorized`
+## Get Balance
+* *Handles Balance Inquiry*
 
-    **Code**: `401` 
+### Balance
+* *This method send's card details after the card reader captures the account information stored on the magnetic stripe*
 
-    **Content** : 
+    **URL** : `/api/verifyCard`
+
+    **Method** : `GET`
+
+    **Auth required** : `YES`
+
+    **Auth Header**: 
     ```json
     {
-        "error": {
-            "status": 401,
-            "code": "AUT_02",
-            "message": "Access Unauthorized",
-            "field": "NoAuth"
+        "USER-KEY": "bearer "
+    }
+    ```
+
+    **Body**: 
+    ```json
+
+    ```
+
+    **Success Response**
+
+    **Description** : `Response Object`
+
+    **Code** : `200 OK`
+
+    **Content**
+    ```json
+    {
+       "status": true,
+        "message": "",
+        "balance": {
+            "availableBalance": "NGN10,000.00",
+            "ledgerBalance": "NGN10,000.00"
         }
     }
     ```
 
+    **Error Responses**
+
+    **Description** : `Return a error object.`
+
+    **Code** : ``
+
+    **Content** :
+    ```json
+    {
+        "status": false,
+        "message": "Financial Institution Not Available",
+        "balance": null
+    }
+    ```
 
 # Author
 * **Ajilore Raphael Olamide** - *All works* - [github](https://github.com/raphealolams)

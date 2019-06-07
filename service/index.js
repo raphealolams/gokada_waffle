@@ -67,6 +67,10 @@ BankService.handleDebit = async function handleDebit(accountNumber, amount) {
   }
 };
 
+BankService.getServices = async function getServices() {
+  
+}
+
 
 function updateLedger(userBalance, newBalance, amount){
   let newEntry, transactionType, difference;
