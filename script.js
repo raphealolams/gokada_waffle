@@ -14,6 +14,7 @@ MongoClient.connect(process.env.DATABSE_URL, { useNewUrlParser: true }, async (e
     const cards = db.collection('cards')
     const accounts = db.collection('accounts')
     const services = db.collection('services')
+    const atms = db.collection('atms')
 
 
     let deletedCards = await cardsDown(cards)
@@ -26,8 +27,8 @@ MongoClient.connect(process.env.DATABSE_URL, { useNewUrlParser: true }, async (e
     let deletedServices = await dropServices(services)
     let createdServices = await createServices(services)
 
-
-    console.log({cardsInserted, createdAccount})
+    let deletedAtms = await dropATMS(atms)
+    let createdAtms = await createATMS(atms)
 });
 
 
@@ -184,6 +185,40 @@ async function createServices(services) {
         },
         {
             available: "Change Pin"
+        }
+    ])
+}
+
+async function dropATMS(atms) {
+    return await atms.deleteMany({})
+}
+
+
+async function createATMS(atms) {
+    return await atms.insertMany([
+        {
+            "name": "Nyohini Road",
+            "address": "Ward M Plot C .North Lamashegu Res Area.Nyohini Road",
+            "email": "hello@hey.com",
+            "website": "we.com"
+        },
+        {
+            "name": "Palace Road, OTA Layout, Kumasi",
+            "address": "No. 2 Block llA, Palace Road, OTA Layout, Adum, Kumasi",
+            "email": "hello@hey.com",
+            "website": "we.com"
+        },
+        {
+            "name": "OSU GLOBAL ACCESS",
+            "address": "OSU GLOBAL ACCESS",
+            "email": "hello@hey.com",
+            "website": "we.com"
+        },
+        {
+            "name": "BURMA CAMP",
+            "address": "BURMA CAMP",
+            "email": "hello@hey.com",
+            "website": "we.com"
         }
     ])
 }

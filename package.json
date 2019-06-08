@@ -28,6 +28,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.7",
     "mongoose": "^5.5.13",
-    "pdfkit": "^0.10.0"
+    "receipt": "^1.4.0"
   }
 }

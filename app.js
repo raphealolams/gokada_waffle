@@ -10,6 +10,7 @@ const Logger = require('./logger').logRequestStart;
 const mongoose = require('mongoose')
 
 
+// setup for DOS attack
 const limiter = new rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,

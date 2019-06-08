@@ -4,6 +4,7 @@
 */
 
 const BankServices = require('../service')
+const Receipt = require('../utils/receipt')
 const Withdrawal = {};
 
 
@@ -21,7 +22,7 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
             if (notAllowed.includes(Number(amount))) return res.status(200).json({
                 status: true,
                 message: "Enter Amount Greater than or equal to 500",
-                accountInfo: null
+                receiptPath: null
             }).end()
 
 
@@ -33,17 +34,25 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
                 
                 transactionStatus = await BankServices.handleDebit(accountNumber, accountType, amount)
 
-                if (transactionStatus.status) return res.status(200).json({
-                    status: true,
-                    message: "Withdrawal Successful",
-                    accountInfo: transactionStatus.balance
-                }).end()
+                if (transactionStatus.status) {
+
+                    bank = await BankServices.getRandomBank()
+                    const { balance, transactions, accountNumber, accountName, accountType } = transactionStatus.balance
+
+                    let receiptPath = Receipt.generateReceipt(bank[0], {accountName, accountNumber, accountType}, transactions.slice(-1)[0], balance)
+
+                    return res.status(200).json({
+                        status: true,
+                        message: "Withdrawal Successful",
+                        receiptPath
+                    }).end()
+                }
                
                 //NOT ENOUGH FUNDS FOR WITHDRAWAL//
                 return res.status(200).json({
                     status: false,
                     message: "Insufficient Funds",
-                    accountInfo: null
+                    receiptPath: null
                 }).end();
             }
 
@@ -51,7 +60,7 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
             return res.status(200).json({
                 status: true,
                 message: "Enter Amount in multiples of 500 or 1000",
-                accountInfo: null
+                receiptPath: null
             }).end()
 
         }

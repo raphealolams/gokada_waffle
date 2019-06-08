@@ -34,7 +34,7 @@ you need to have the following installed on your machine
 # Installing
 Clone the Repository
 ```
-    git clone https://github.com/raphealolams/gokada_waffle.git
+    git clone https://github.com/raphealolams/waffle.git
 ```
 Install Dependency
 ```
@@ -267,40 +267,7 @@ Install Dependency
     {
         "status": true,
         "message": "Withdrawal Successful",
-        "accountInfo": {
-            "balance": {
-                "available": "8000",
-                "ledger": "10000"
-            },
-            "transactions": [
-                {
-                    "transDate": "2019-06-08T11:14:51.659Z",
-                    "transType": "Debit",
-                    "transDiffernce": "-1000",
-                    "transactionAmount": "1000",
-                    "balance": 9000
-                },
-                {
-                    "transDate": "2019-06-08T11:15:09.141Z",
-                    "transType": "Debit",
-                    "transDiffernce": "-500",
-                    "transactionAmount": "500",
-                    "balance": 8500
-                },
-                {
-                    "transDate": "2019-06-08T11:15:48.302Z",
-                    "transType": "Debit",
-                    "transDiffernce": "-500",
-                    "transactionAmount": "500",
-                    "balance": 8000
-                }
-            ],
-            "createdAt": "2019-06-08T11:13:05.844Z",
-            "_id": "5cfb961b9f6e1606640520f1",
-            "accountNumber": "0011907234",
-            "accountName": "Sofia Green",
-            "accountType": "Savings"
-        }
+        "receiptPath": "path to receipt"
     }
     ```
 
@@ -315,7 +282,7 @@ Install Dependency
     {
         "status": false,
         "message": "Insufficient Funds" || "Enter Amount Greater than or equal to 500" || "Enter Amount in multiples of 500 or 1000",
-        "accountInfo": null
+        "receiptPath": null
     }
     ```
 

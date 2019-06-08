@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt')
 const Cards = require('../models/cards.models')
 const Account = require('../models/accounts.models')
 const Services = require('../models/services.models')
+const Atms = require('../models/atms.models')
+
 const BankService = {};
 let limitReached = 0, maxPinTry = 3
 
@@ -76,7 +78,11 @@ BankService.handleDebit = async function handleDebit(accountNumber, acctType, am
 };
 
 BankService.getServices = async function getServices() {
-  return  await Services.find({})
+  return await Services.find({})
+}
+
+BankService.getRandomBank = async function getRandomBank() {
+  return await Atms.find({})
 }
 
 
