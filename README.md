@@ -17,6 +17,8 @@ Backend Developer Assignment
         * [Get Services](#get-services)
     * [Balance](#balance)
         * [Get Balance](#get-balance)
+    * [Withdrawal](#withdrawal)
+        * [Withdraw Funds](#withdraw-funds)
     
 * [Author](#author)
 * [What i Do](#what-i-do)
@@ -224,6 +226,96 @@ Install Dependency
     {
         "status": false,
         "message": "Financial Institution Not Available",
+    }
+    ```
+
+## Withdrawal
+* *Handles Withdrawal*
+
+### Withdraw Funds
+* *Withdraw Funds*
+
+    **URL** : `/api/withdrawFunds`
+
+    **Method** : `POST`
+
+    **Auth required** : `YES`
+
+    **Auth Header**: 
+    ```json
+    {
+        "USER-KEY": "bearer "
+    }
+    ```
+
+    **Body**: 
+    ```json
+    {
+        "amount": "500",
+	    "accountType": "savings"
+    }
+    ```
+
+    **Success Response**
+
+    **Description** : `Response Object`
+
+    **Code** : `200 OK`
+
+    **Content**
+    ```json
+    {
+        "status": true,
+        "message": "Withdrawal Successful",
+        "accountInfo": {
+            "balance": {
+                "available": "8000",
+                "ledger": "10000"
+            },
+            "transactions": [
+                {
+                    "transDate": "2019-06-08T11:14:51.659Z",
+                    "transType": "Debit",
+                    "transDiffernce": "-1000",
+                    "transactionAmount": "1000",
+                    "balance": 9000
+                },
+                {
+                    "transDate": "2019-06-08T11:15:09.141Z",
+                    "transType": "Debit",
+                    "transDiffernce": "-500",
+                    "transactionAmount": "500",
+                    "balance": 8500
+                },
+                {
+                    "transDate": "2019-06-08T11:15:48.302Z",
+                    "transType": "Debit",
+                    "transDiffernce": "-500",
+                    "transactionAmount": "500",
+                    "balance": 8000
+                }
+            ],
+            "createdAt": "2019-06-08T11:13:05.844Z",
+            "_id": "5cfb961b9f6e1606640520f1",
+            "accountNumber": "0011907234",
+            "accountName": "Sofia Green",
+            "accountType": "Savings"
+        }
+    }
+    ```
+
+    **Error Responses**
+
+    **Description** : `Return a error object.`
+
+    **Code** : ``
+
+    **Content** :
+    ```json
+    {
+        "status": false,
+        "message": "Insufficient Funds" || "Enter Amount Greater than or equal to 500" || "Enter Amount in multiples of 500 or 1000",
+        "accountInfo": null
     }
     ```
 

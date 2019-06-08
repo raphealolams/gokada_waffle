@@ -21,7 +21,7 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
             if (notAllowed.includes(Number(amount))) return res.status(200).json({
                 status: true,
                 message: "Enter Amount Greater than or equal to 500",
-                balance: null
+                accountInfo: null
             }).end()
 
 
@@ -36,14 +36,14 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
                 if (transactionStatus.status) return res.status(200).json({
                     status: true,
                     message: "Withdrawal Successful",
-                    balance: transactionStatus.balance
+                    accountInfo: transactionStatus.balance
                 }).end()
                
                 //NOT ENOUGH FUNDS FOR WITHDRAWAL//
                 return res.status(200).json({
                     status: false,
                     message: "Insufficient Funds",
-                    balance: null
+                    accountInfo: null
                 }).end();
             }
 
@@ -51,7 +51,7 @@ Withdrawal.withdrawFunds = async function withdrawFunds(req, res, next) {
             return res.status(200).json({
                 status: true,
                 message: "Enter Amount in multiples of 500 or 1000",
-                balance: null
+                accountInfo: null
             }).end()
 
         }
