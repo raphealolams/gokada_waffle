@@ -12,12 +12,25 @@ AvailableServices.getAvailableServices = async function getAvailableServices(req
         const { decoded } = res;
 
         if (decoded && decoded.validated) {
+            let array = [];
+            let services = await BankServices.getServices()
+            
 
+            services.map((service, index) => {
+                return array.push(service.available)
+            } )
 
-
+            return res.status(200).json({
+                status: true,
+                message: "Here are the available services",
+                services: array
+            })
         }
 
-        return res.status(400).json().end()
+        return res.status(400).json({
+            status: false,
+            message: "Financial Institution Not Available"
+        }).end()
 
     } catch (error) {
         console.error(error)

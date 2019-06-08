@@ -5,7 +5,8 @@
 
 const bcrypt = require('bcrypt')
 const Cards = require('../models/cards.models')
-const Account = require('../models/account.models')
+const Account = require('../models/accounts.models')
+const Services = require('../models/services.models')
 const BankService = {};
 let limitReached = 0, maxPinTry = 3
 
@@ -44,22 +45,29 @@ BankService.retrieveBalance = async function retrieveBalance(accountNumber) {
   return balance
 };
 
-BankService.handleDebit = async function handleDebit(accountNumber, amount) {
+BankService.handleDebit = async function handleDebit(accountNumber, acctType, amount) {
   let userBalance = await this.retrieveBalance(accountNumber)
-  let {balance: { available, ledger} } = userBalance
+  let {balance: { available, ledger}, accountType } = userBalance
 
-  if (parseFloat(available) >= parseFloat(amount)) {
-    let newBalance = parseFloat(available) - parseFloat(amount);
-    let entries = updateLedger(available, newBalance, amount)
-
-    let update = await Account.findOneAndUpdate({accountNumber}, {balance: {available: newBalance, ledger }, $push: {transactions: entries} }, {new: true})
-
-
+  if (accountType.toLowerCase() === acctType.toLowerCase()){
+    if (parseFloat(available) >= parseFloat(amount)) {
+      let newBalance = parseFloat(available) - parseFloat(amount);
+      let entries = updateLedger(available, newBalance, amount)
+  
+      let update = await Account.findOneAndUpdate({accountNumber}, {balance: {available: newBalance, ledger }, $push: {transactions: entries} }, {new: true})
+  
+  
+      return {
+        status: true,
+        balance: update
+      }
+    } 
     return {
-      status: true,
-      balance: update
+      status: false,
+      balance: null
     }
-  } 
+
+  }
 
   return {
     status: false,
@@ -68,7 +76,7 @@ BankService.handleDebit = async function handleDebit(accountNumber, amount) {
 };
 
 BankService.getServices = async function getServices() {
-  
+  return  await Services.find({})
 }
 
 

@@ -22,8 +22,8 @@ BalanceInquiry.getBalance = async function getBalance(req, res, next) {
                     status: true,
                     message: "",
                     balance: {
-                        availableBalance: currencyFormatter("NGN").format(userBalance.balance.available),
-                        ledgerBalance: currencyFormatter("NGN").format(userBalance.balance.ledger)
+                        availableBalance: currencyFormatter("NGN").format(userBalance.balance.available.trim()),
+                        ledgerBalance: currencyFormatter("NGN").format(userBalance.balance.ledger.trim())
                     }
                 }).end()
             }

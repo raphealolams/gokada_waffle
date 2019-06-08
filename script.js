@@ -12,13 +12,20 @@ MongoClient.connect(process.env.DATABSE_URL, { useNewUrlParser: true }, async (e
     const db = client.db(process.env.DATABASENAME); 
     
     const cards = db.collection('cards')
-    const account = db.collection('accounts')
+    const accounts = db.collection('accounts')
+    const services = db.collection('services')
+
 
     let deletedCards = await cardsDown(cards)
     let cardsInserted = await createCards(cards)
 
-    let deleteAccount = await accountDown(account)
-    let createdAccount = await createAccount(account)
+    let deleteAccount = await accountDown(accounts)
+    let createdAccount = await createAccount(accounts)
+
+
+    let deletedServices = await dropServices(services)
+    let createdServices = await createServices(services)
+
 
     console.log({cardsInserted, createdAccount})
 });
@@ -86,15 +93,16 @@ async function createCards(cards) {
 }
 
 
-async function accountDown(account){
-    return await account.deleteMany({})
+async function accountDown(accounts){
+    return await accounts.deleteMany({})
 }
 
-async function createAccount(account) {
-    return await account.insertMany([
+async function createAccount(accounts) {
+    return await accounts.insertMany([
         {
             accountNumber: "1029209202",
             accountName: "Sofia Woodward",
+            accountType: "Savings",
             banlance: {
                 available: 10000,
                 ledger: 10000
@@ -104,6 +112,7 @@ async function createAccount(account) {
         {
             accountNumber: "1029209201",
             accountName: "Joel Bull",
+            accountType: "Savings",
             balance: {
                 available: 10000,
                 ledger: 10000
@@ -113,6 +122,7 @@ async function createAccount(account) {
         {
             accountNumber: "010101021",
             accountName: "Chelsea Harrison",
+            accountType: "Savings",
             balance: {
                 available: 10000,
                 ledger: 10000
@@ -122,6 +132,7 @@ async function createAccount(account) {
         {
             accountNumber: "0011902381",
             accountName: "Ella Gardner",
+            accountType: "Savings",
             balance: {
                 available: 10000,
                 ledger: 10000
@@ -131,6 +142,7 @@ async function createAccount(account) {
         {
             accountNumber: "0011902380",
             accountName: "Jamie Charlton",
+            accountType: "Savings",
             balance: {
                 available: 10000,
                 ledger: 10000
@@ -140,11 +152,38 @@ async function createAccount(account) {
         {
             accountNumber: "0011907234",
             accountName: "Sofia Green",
+            accountType: "Savings",
             balance: {
                 available: 10000,
                 ledger: 10000
             },
             transactions: []
+        }
+    ])
+}
+
+
+async function dropServices(services) {
+    return await services.deleteMany({})
+}
+
+
+async function createServices(services) {
+    return await services.insertMany([
+        {
+            available: "Cash Withdrawal"
+        },
+        {
+            available: "Balance Inquiry"
+        },
+        {
+            available: "Bills Payment"
+        },
+        {
+            available: "Quick Teller"
+        },
+        {
+            available: "Change Pin"
         }
     ])
 }

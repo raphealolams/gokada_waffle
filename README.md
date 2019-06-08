@@ -13,8 +13,11 @@ Backend Developer Assignment
 * [API Endpoint](#API-Endpoint)
     * [Validate Card](#validate-card)
         * [Verify Card](#verify-card)
-    * [Get Balance](#get-balance)
-        * [Balance](#balance)
+    * [Services](#services)
+        * [Get Services](#get-services)
+    * [Balance](#balance)
+        * [Get Balance](#get-balance)
+    
 * [Author](#author)
 * [What i Do](#what-i-do)
 
@@ -108,13 +111,13 @@ Install Dependency
     }
     ```
 
-## Get Balance
+## Balance
 * *Handles Balance Inquiry*
 
-### Balance
-* *This method send's card details after the card reader captures the account information stored on the magnetic stripe*
+### Get Balance
+* *Get's Account Balance*
 
-    **URL** : `/api/verifyCard`
+    **URL** : `/api/getBalance`
 
     **Method** : `GET`
 
@@ -162,6 +165,65 @@ Install Dependency
         "status": false,
         "message": "Financial Institution Not Available",
         "balance": null
+    }
+    ```
+
+## Services
+* *Handles Services Available*
+
+### Get Services
+* *Get*
+
+    **URL** : `/api/getAvailableServices`
+
+    **Method** : `GET`
+
+    **Auth required** : `YES`
+
+    **Auth Header**: 
+    ```json
+    {
+        "USER-KEY": "bearer "
+    }
+    ```
+
+    **Body**: 
+    ```json
+
+    ```
+
+    **Success Response**
+
+    **Description** : `Response Object`
+
+    **Code** : `200 OK`
+
+    **Content**
+    ```json
+    {
+        "status": true,
+        "message": "Here are the available services",
+        "services": [
+            "Cash Withdrawal",
+            "Balance Inquiry",
+            "Bills Payment",
+            "Quick Teller",
+            "Change Pin"
+        ]
+    }
+    ```
+
+    **Error Responses**
+
+    **Description** : `Return a error object.`
+
+    **Code** : ``
+
+    **Content** :
+    ```json
+    {
+        "status": false,
+        "message": "Financial Institution Not Available",
     }
     ```
 
